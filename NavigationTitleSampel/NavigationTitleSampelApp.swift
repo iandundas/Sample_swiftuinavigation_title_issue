@@ -115,20 +115,29 @@ struct ItemRowView: View {
 	}
 	
 	var body: some View {
+	
+		// This works:
+//		NavigationLink(value: viewModel.item) {
+//			Text(viewModel.item.title)
+//		}
+//		.navigationDestination(for: Item.self) { item in
+//			EditItemView(viewModel: .init(item: item))
+//				.navigationTitle("Navigation Title")
+//		}
 		
+		// This doesn't:   :(
+				
 		Button {
 			viewModel.userTappedRow()
 		} label: {
-			NavigationLink(value: UUID()) {
-				Text(viewModel.item.title)
-			}
+			Text(viewModel.item.title)
 		}
 		.buttonStyle(.borderless)
 		.navigationDestination(
 			unwrapping: $viewModel.route,
 			case: /ItemRowViewModel.Route.edit,
 			destination: { $editDayViewModel in
-				
+
 				EditItemView(viewModel: editDayViewModel)
 					.navigationTitle("Navigation Title")
 			}
